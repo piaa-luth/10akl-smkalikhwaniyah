@@ -1,1 +1,1 @@
-# 10akl-smkalikhwaniyah
+# 10akl-smkalikhwaniyah.github.io
