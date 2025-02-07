@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap");
+
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background-image: url("./img/background.jpg");
+            background-size: cover;
+            overflow: auto;
+            position: relative;
+        }
+
+        nav {
+            width: 100%;
+            height: 10vh;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: rgb(23, 228, 255);
+            text-shadow: 0 0 10px rgb(23, 228, 255);
+        }
+
+        .hamburg,
+        .cancel {
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            color: white;
+            display: none;
+            font-size: clamp(2.5rem, 0.5rem + 5vw, 3rem);
+        }
+
+        .nav-container .links {
+            display: flex;
+        }
+
+        .nav-container .links a {
+            font-size: 1.2rem;
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: 550;
+            transition: 0.3s linear;
+        }
+
+        .nav-container .links a:hover {
+            color: rgb(23, 228, 255);
+            border-bottom: 2px solid rgb(23, 228, 255);
+        }
+
+        .nav-container .links .active {
+            color: rgb(23, 228, 255);
+            border-bottom: 2px solid rgb(23, 228, 255);
+        }
+
+        .dropdown {
+            z-index: 1000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            transform: translateY(-500px);
+            width: 100%;
+            height: auto;
+            backdrop-filter: blur(4px) brightness(40%);
+            box-shadow: 0 0 20px black;
+            transition: 0.2s linear;
+        }
+
+        .dropdown .links a {
+            display: flex;
+            color: white;
+            text-decoration: none;
+            padding: 15px 0;
+            justify-content: center;
+            align-items: center;
+            transition: 0.2s linear;
+        }
+
+        .dropdown .links a:hover {
+            background-color: rgb(23, 228, 255);
+        }
+
+        /* Service Section Styles */
+        .services-container {
+            width: 100%;
+            min-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .services-content {
+            width: 80%;
+            max-width: 1200px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+        }
+
+        .services-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .services-header h1 {
+            font-size: 2.5rem;
+            color: rgb(23, 228, 255);
+            text-shadow: 0 0 10px rgb(23, 228, 255);
+            margin-bottom: 1rem;
+        }
+
+        .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+@media (max-width: 884px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+        .service-card {
+            background: rgba(62, 90, 183, 0.788);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(62, 90, 183, 0.788);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: rgb(23, 228, 255);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            color: rgb(23, 228, 255);
+            margin-bottom: 1rem;
+        }
+
+        .service-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #cccccc;
+        }
+
+        .service-price {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: rgb(23, 228, 255);
+            font-weight: bold;
+        }
+
+        .instagram-link {
+            color: white;
+        }
+
+        .instagram-link:hover {
+            color: white;
+        }
+
+        @media (max-height: 800px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .services-container {
+                height: auto;
+                min-height: 90vh;
+            }
+        }
+
+        @media (max-width: 884px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            nav .logo {
+                position: absolute;
+                top: 16px;
+                left: 15px;
+                font-size: 1.5rem;
+            }
+
+            .nav-container .links {
+                display: none;
+            }
+
+            .hamburg,
+            .cancel {
+                display: block;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .services-container {
+                padding: 1rem;
+            }
+
+            .services-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-header h1 {
+                font-size: 2rem;
+            }
+
+            .service-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <title>Member X AKL - Portfolio Website</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo" data-aos="zoom-in" data-aos-duration="1500">
+                X <span> AKL </span>
+            </div>
+            <div class="links">
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100"><a
+                        href="index.html">Home</a></div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200"><a
+                        href="about.html">About</a></div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300"><a
+                        href="X_AKL.html">X AKL</a></div>
+                <div class="link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400"><a
+                        href="member_X_AKL.html">Member X AKL</a></div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500"><a
+                        href="contact.html">Contact</a></div>
+            </div>
+        </div>
+        <i class="fa-solid fa-bars hamburg" onclick="hamburg()"></i>
+        <div class="dropdown">
+            <div class="links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="X_AKL.html">X AKL</a>
+                <a href="member_X_AKL.html">Member X AKL</a>
+                <a href="contact.html">Contact</a>
+                <i class="fa-solid fa-xmark cancel" onclick="cancel()"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="services-container">
+        <div class="services-content">
+            <div class="services-header" data-aos="fade-down" data-aos-duration="1500">
+                <h1>Member X AKL</h1>
+                <p>"Ayo kenalan sama anak 10 AKL akt 27" </p>
+            </div>
+            <div class="services-grid">
+                <!-- Anggota 1 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Aisyah Malika Hayati</h3>
+                    <p class="service-description">"ngimpi naon wae anu anjeun pikahoyong, sabab eta ngan ukur impian."</p>
+                    <a href="https://www.instagram.com/euphoricfie" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>euphoricfie
+                    </a>
+                </div>
+
+                <!-- Anggota 2 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Alan Rama Saputra</h3>
+                    <p class="service-description">"Belajarlah dari kegagalan, karena kegagalan itu adalah pelajaran terbaik."</p>
+                    <a href="https://www.instagram.com/alan_rama2" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>alan_rama2
+                    </a>
+                </div>
+
+                <!-- Anggota 3 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Anindya Fardilla Husnah</h3>
+                    <p class="service-description">"Kamu ga harus sempurna di mata semua orang cukup jadi versi terbaik dari dirimu sendiri"</p>
+                    <a href="https://www.instagram.com/anindyfh" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>anindyfh
+                    </a>
+                </div>
+
+               <!-- Anggota 4 -->
+<div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+    <div class="service-icon">
+    </div>
+    <h3 class="service-title">Aska Aulia Putri</h3>
+    <p class="service-description">"Lakukan apa yg kau mau, sekarang, saat hati mu bergerak, jangan kau larang hidup ini tak ada artinyaa, maka kau bebas mengarang maknanya seorang!!"</p>
+    <a href="https://www.instagram.com/_askaaaull_" target="_blank" style="color: white">
+        <i class="fab fa-instagram"></i> _askaaaull_
+    </a>
+</div>
+
+                <!-- Anggota 5 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Bella Mutiara Citra</h3>
+                    <p class="service-description">"Tetap anggun, tetap tak terganggu. Dunia ini terlalu luas untuk sibuk dengan hal-hal kecil."</p>
+                    <a href="https://www.instagram.com/bycellz3" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>bycellz3
+                    </a>
+                </div>
+
+                <!-- Anggota 6 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Daffa Devara Pratama</h3>
+                    <p class="service-description">"Tetap anggun, tetap tak terganggu. Dunia ini terlalu luas untuk sibuk dengan hal-hal kecil."</p>
+                    <a href="https://www.instagram.com/nxx___belzzzzzzz3" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>nxx___belzzzzzzz
+                    </a>
+                </div>
+
+                <!-- Anggota 7 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Fathir Amirul Umron</h3>
+                    <p class="service-description">"Selalu luangkan waktu, untuk Dia yang telah menciptakan waktu."</p>
+                    <a href="https://www.instagram.com/xtry" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>xtry
+                    </a>
+                </div>
+
+                <!-- Anggota 8 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Husein Abqori</h3>
+                    <p class="service-description">"Penderitaan membuatku semakin kuat dan berkembang, teruslah berjalan Walau dunia tidak seperti yang diharapkan"</p>
+                    <a href="https://www.instagram.com/Habqori27" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>Habqori27
+                    </a>
+                </div>
+
+                <!-- Anggota 9 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Karisha Putri Oktaviani</h3>
+                    <p class="service-description">"Jangan terlalu banyak memahami orang lain, hingga kau lupa memahami diri sendiri"</p>
+                    <a href="https://www.instagram.com/ichac_aa24" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>ichac_aa24
+                    </a>
+                </div>
+
+                <!-- Anggota 10 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Luthvia Dwi Cahyani</h3>
+                    <p class="service-description">"Terkadang kamu merasa sendirian di dunia ini, tetapi pada kenyataannya kamu memiliki orang-orang di sekitar kamu yang mencintai dan memperhatikanmu"</p>
+                    <a href="https://www.instagram.com/pii_lop" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>pii_lop
+                    </a>
+                </div>
+
+                <!-- Anggota 11 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Marissa Ulfa</h3>
+                    <p class="service-description">"Cinta itu investasi jangka panjang. Jangan terburu-buru mengambil keputusan, hitung dulu untung ruginya."</p>
+                </div>
+
+                <!-- Anggota 12 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Mayyada Azzahra</h3>
+                    <p class="service-description">"ليس العالم غير عادل، ولكننا نحن الذين لا نستطيع قبول القدر 
+                        <span>Bukan dunia yang tidak adil, tapi kita yang tidak bisa menerima takdir."</span></p>
+                    <a href="https://www.instagram.com/myda.aaaa" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>myda.aaaa
+                    </a>
+                </div>
+
+                <!-- Anggota 13 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Mughni Kansa Sukirman</h3>
+                    <p class="service-description">"Tidak ada yang tidak mungkin jika kamu yakin."</p>
+                    <a href="https://www.instagram.com/mughniiknss" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>mughniiknss
+                    </a>
+                </div>
+
+                <!-- Anggota 14 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Nabila Nur Wahidah Salsabila</h3>
+                    <p class="service-description">"Batasi harapanmu pada seseorang, agar sakitmu tidak berlebihan"</p>
+                    <a href="https://www.instagram.com/nabilanrwhd" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>nabilanrwhd
+                    </a>
+                </div>
+
+                <!-- Anggota 15 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Putri Anta Vanysa</h3>
+                    <p class="service-description">"Hidup itu seperti tempat parkir kadang kamu harus menunggu lama, dan kadang cuma dapat tempat di pojokan."</p>
+                    <a href="https://www.instagram.com/vaa4n.n" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>vaa4n.n
+                    </a>
+                </div>
+
+                <!-- Anggota 16 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Putri Ayu Juliyana</h3>
+                    <p class="service-description">"Cari tempat di mana hadirmu di syukuri, biarpun sederhana, paling tidak usahamu di hargai dan kabarmu selalu di nanti"</p>
+                    <a href="https://www.instagram.com/a.poochfun_" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>a.poochfun_
+                    </a>
+                </div>
+
+                <!-- Anggota 17 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Rendy Bragi</h3>
+                    <p class="service-description">"Ada 2 opsi yang Tuhan beri : (buat kekuranganmu itu sebagai motivasi untuk memperbaiki diri atau buat kekuranganmu itu selalu menghantui pikiranmu setiap hari)"</p>
+                    <a href="https://www.instagram.com/rendjetjet" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>rendjetjet
+                    </a>
+                </div>
+
+                <!-- Anggota 18 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Salma Nurul Insani</h3>
+                    <p class="service-description">"You're the most beautiful person in your life, so be yourself, be beautiful"</p>
+                    <a href="https://www.instagram.com/salmaa.0_0" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>salmaa.0_0
+                    </a>
+                </div>
+
+                <!-- Anggota 19 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Salwa Rahmadani</h3>
+                    <p class="service-description">"Setiap orang bisa sembuh dari luka nya, tapi ga semua orang bisa berdamai dengan trauma nya"</p>
+                    <a href="https://www.instagram.com/slwaarhmdniii" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>slwaarhmdniii
+                    </a>
+                </div>
+
+                <!-- Anggota 20 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Silva Almadinah</h3>
+                    <p class="service-description">"Jangan pernah menjadi orang yang selalu ada, untuk orang yang menjadikanmu hanya sesempatnya saja."</p>
+                    <a href="https://www.instagram.com/_yyslva" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>_yyslva
+                    </a>
+                </div>
+
+                <!-- Anggota 21 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Tasya Syifa Choirunnisa</h3>
+                    <p class="service-description">"Mengulang itu sakit, tapi mengenal orang baru itu sulit"</p>
+                    <a href="https://www.instagram.com/tssyiff" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>tssyiff
+                    </a>
+                </div>
+
+                <!-- Anggota 22 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Yosi Yolanda</h3>
+                    <p class="service-description">"Don’t say you can’t before you try, jangan katakan tidak bisa sebelum mencoba, jatuh itu biasa berani bangkit itu luarbiasa"</p>
+                    <a href="https://www.instagram.com/ysyolnda_" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>ysyolnda_
+                    </a>
+                </div>
+
+                <!-- Anggota 23 -->
+                <div class="service-card" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+                    <div class="service-icon">
+                    </div>
+                    <h3 class="service-title">Zahra Anzani</h3>
+                    <p class="service-description">"Jangan tersenyum hanya bahagia, tapi tersenyumlah untuk bahagia."</p>
+                    <a href="https://www.instagram.com/zhranzni" target="_blank" style="color: white">
+                        <i class="fab fa-instagram"></i>zhranzni
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({ offset: 0 });
+
+        function hamburg() {
+            const navbar = document.querySelector(".dropdown")
+            navbar.style.transform = "translateY(0px)"
+        }
+
+        function cancel() {
+            const navbar = document.querySelector(".dropdown")
+            navbar.style.transform = "translateY(-500px)"
+        }
+    </script>
+</body>
+
+</html>
